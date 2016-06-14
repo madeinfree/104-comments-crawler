@@ -1,0 +1,27 @@
+{
+  "name": "104-parser",
+  "version": "1.0.0",
+  "description": "for 104-extension comments parser",
+  "main": "104-crawler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "babel-node 104-crawler.js"
+  },
+  "keywords": [
+    "104",
+    "crawler",
+    "parse",
+    "extension",
+    "plugin"
+  ],
+  "author": "Whien_Liou",
+  "license": "MIT",
+  "dependencies": {
+    "babel-plugin-transform-es2015-arrow-functions": "^6.8.0",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "es6-promise": "^3.2.1",
+    "isomorphic-fetch": "^2.2.1",
+    "koa": "^2.0.0"
+  }
+}
