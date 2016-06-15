@@ -1,3 +1,5 @@
+import config from './config.json'
+
 require('es6-promise').polyfill()
 require('isomorphic-fetch')
 
@@ -7,7 +9,7 @@ const jobName = /(<h1>)[^abc]*\s{1}[^<]./g
 const jobNameUseLogo = /<h1>[^abc]*.*<a/g
 const jobStringName = /jobsource=".*<\/a>/g
 
-fetch(`http://www.104.com.tw/jobbank/custjob/index.php?j=${process.env.ID_104}&page=${process.env.PAGE_104}`)
+fetch(`http://www.104.com.tw/jobbank/custjob/index.php?j=${config['compony_id']}&page=${config['page']}`)
   .then((res) => {
     res.text().then((result) => {
       //name number
@@ -33,14 +35,14 @@ fetch(`http://www.104.com.tw/jobbank/custjob/index.php?j=${process.env.ID_104}&p
       })
       // console.log(name.trim(), allJobStringName[0], jobNos[0])
       allJobStringName.forEach((n, index) => {
-        console.log(`fetch-${index}: `, `${process.env.API_104}?company_name=${name2.trim()}&job_name=${allJobStringName[index].trim()}&e04_job_no=${jobNos[index].trim()}&eeee_job_no=null`)
+        console.log(`fetch-${index}: `, `${config['api']['job']}?company_name=${name2.trim()}&job_name=${allJobStringName[index].trim()}&e04_job_no=${jobNos[index].trim()}&eeee_job_no=null`)
         fetchId(index, name2.trim(), allJobStringName[index], jobNos[index])
       })
     })
   })
 
 const fetchId = (index, name, jobName, jobno) => {
-  fetch(`${process.env.API_104}?company_name=${encodeURI(name)}&job_name=${encodeURI(jobName)}&e04_job_no=${jobno}&eeee_job_no=null`, {
+  fetch(`${config['api']['job']}?company_name=${encodeURI(name)}&job_name=${encodeURI(jobName)}&e04_job_no=${jobno}&eeee_job_no=null`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -48,7 +50,7 @@ const fetchId = (index, name, jobName, jobno) => {
     })
     .then((res) => {
       res.json().then((result) => {
-        fetch(`${process.env.API_C_104}`, {
+        fetch(`${config['api']['comments']}`, {
           headers: {
             "Content-Type": "application/json",
             "x-job-id": result.id
