@@ -17,6 +17,7 @@ https://github.com/madeinfree/104-comments-crawler.git
 2. p - 頁碼
 
 http://localhost:10004/?c=(公司編號)&p=(頁碼)
+
 http://localhost:10004/?c=624a43255e46406a30683b1d1d1d1d5f2443a363189j50&p=1
 
 # Setting
