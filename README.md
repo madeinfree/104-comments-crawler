@@ -2,13 +2,22 @@
 
 ![104-comments-crawler](http://i.imgur.com/RNGmSIm.png)
 
-幫助您快速查找 104 天～～眼通留言訊息，目前只支援 terminal 觀看。
+幫助您快速查找 104 天～～眼通留言訊息，啟動後輸入 Request query 結果為 JSON。
 
 # Installation
 
 ```
 https://github.com/madeinfree/104-comments-crawler.git
 ```
+
+# Request query
+
+1. c - 公司編號
+
+2. p - 頁碼
+
+http://localhost:10004/?c=(公司編號)&p=(頁碼)
+http://localhost:10004/?c=624a43255e46406a30683b1d1d1d1d5f2443a363189j50&p=1
 
 # Setting
 
@@ -30,8 +39,6 @@ http://www.104.com.tw/jobbank/custjob/index.php?j=624a43255e46406a30683b1d1d1d1d
 
 ```json
 {
-  "compony_id": "compony_id",
-  "page": 1,
   "api": {
     "job": "job-api-url",
     "comments": "comments-api-url"
@@ -43,6 +50,7 @@ http://www.104.com.tw/jobbank/custjob/index.php?j=624a43255e46406a30683b1d1d1d1d
 # Use
 ```
 npm start
+http://localhost:10004/?c=624a43255e46406a30683b1d1d1d1d5f2443a363189j50&p=1
 ```
 
 # license
