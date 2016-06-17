@@ -55,37 +55,38 @@ app.use(async (ctx, next) => {
     }
   })
 
-  const fetchAllComments = await mergeJobNoAndJobName.reduce(async (pre, payload, index, array) => {
-    return await fetch(`${config['api']['job']}?company_name=${encodeURI(name2.trim())}&job_name=${encodeURI(payload.jobName)}&e04_job_no=${payload.jobNo}&eeee_job_no=null`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }).then(async (res) => {
-        return await res.json().then(async (result) => {
-          if(!result) return
-          return await fetch(`${config['api']['comments']}`, {
-            headers: {
-              "Content-Type": "application/json",
-              "x-job-id": result.id
-            }
-          }).then(async (res) => {
-                const rr = await res.json()
-                if(rr[0] !== undefined) {
-                  arr.push(rr[0])
-                }
-            })
-        })
-      })
-  }, [])
+
+  for(let i = 0; i < mergeJobNoAndJobName.length ; i++) {
+    let name = mergeJobNoAndJobName[i].jobName
+    let jobNo = mergeJobNoAndJobName[i].jobNo
+    let apiUrl = `${config['api']['job']}?company_name=${encodeURI(name2.trim())}&job_name=${encodeURI(name)}&e04_job_no=${jobNo}&eeee_job_no=null`;
+    let respond = await fetch(apiUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    let respondJson = await respond.json()
+    let result = await fetch(`${config['api']['comments']}`, {
+      headers: {
+        "Content-Type": "application/json",
+        "x-job-id": respondJson.id
+      }
+    })
+    const rr = await result.json()
+    if(rr[0] !== undefined && !res.errorMessage) {
+      arr.push(rr[0])
+    } else {
+      console.log('error or timeout')
+    }
+  }
+
   await setBody(ctx, next, arr)
 })
 
 const setBody = (ctx, next, arr) => {
-  console.log('ccc', arr)
   ctx.status = 200
   ctx.body = arr
-  next()
 }
 
 app.listen('10004')
